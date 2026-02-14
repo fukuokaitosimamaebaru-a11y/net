@@ -1,95 +1,114 @@
 <!DOCTYPE html>
-<html lang="multi">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>Global Game Ranking 2026</title>
+    <title>Social Problem Games v1.1.0</title>
     <style>
-        body { font-family: 'Helvetica Neue', Arial, sans-serif; background: #050505; color: #fff; margin: 0; padding: 20px; }
-        .wrapper { max-width: 1200px; margin: auto; border: 1px solid #333; border-radius: 16px; background: #111; overflow: hidden; }
-        .hero { background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); padding: 40px 20px; text-align: center; }
-        .hero h1 { margin: 0; font-size: 32px; font-weight: 900; }
-        .hero div { font-size: 14px; margin-top: 10px; opacity: 0.8; }
-        table { width: 100%; border-collapse: collapse; table-layout: fixed; }
-        th { background: #222; color: #aaa; padding: 15px; text-align: left; font-size: 12px; border-bottom: 2px solid #444; }
-        td { padding: 20px; border-bottom: 1px solid #222; vertical-align: top; }
-        .rank { font-size: 28px; font-weight: bold; color: #ff3e3e; text-align: center; width: 80px; }
-        .title-group { font-size: 20px; font-weight: bold; color: #fff; margin-bottom: 10px; }
-        .lang-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; font-size: 13px; line-height: 1.5; }
-        .lang-item { border-left: 2px solid #333; padding-left: 10px; }
-        .lang-label { color: #58a6ff; font-weight: bold; font-size: 10px; display: block; margin-bottom: 2px; }
-        tr:hover { background: #161616; }
-        @media (max-width: 768px) { .lang-grid { grid-template-columns: 1fr; } }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background: #050505; color: #fff; margin: 0; padding: 20px; transition: background 0.3s; }
+        .wrapper { max-width: 900px; margin: 40px auto; background: #111; border: 1px solid #333; border-radius: 20px; overflow: hidden; position: relative; }
+        
+        /* バージョン表記 */
+        .version-tag { position: absolute; top: 15px; left: 20px; font-size: 12px; color: #666; font-family: monospace; }
+        
+        /* 右上ドロップアップ風セレクター */
+        .lang-selector { position: absolute; top: 15px; right: 20px; }
+        select { background: #222; color: #fff; border: 1px solid #444; padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 13px; }
+        
+        .header { background: linear-gradient(180deg, #333, #111); padding: 50px 20px 30px; text-align: center; border-bottom: 1px solid #333; }
+        .header h1 { margin: 0; font-size: 24px; color: #ff3e3e; text-transform: uppercase; letter-spacing: 2px; }
+        
+        table { width: 100%; border-collapse: collapse; }
+        th { background: #1a1a1a; color: #666; text-align: left; padding: 12px 20px; font-size: 11px; letter-spacing: 1px; }
+        td { padding: 30px 20px; border-bottom: 1px solid #222; }
+        
+        .rank-num { font-size: 40px; font-weight: 900; color: #222; line-height: 1; }
+        .game-title { font-size: 22px; font-weight: bold; display: block; margin-bottom: 8px; color: #fff; }
+        .reason-text { font-size: 14px; color: #aaa; line-height: 1.7; max-width: 600px; }
+        
+        /* 言語切り替えロジック */
+        [data-lang] { display: none; }
+        body[data-v-lang="ja"] [data-lang="ja"] { display: block; }
+        body[data-v-lang="en"] [data-lang="en"] { display: block; }
+        body[data-v-lang="cn"] [data-lang="cn"] { display: block; }
+        body[data-v-lang="es"] [data-lang="es"] { display: block; }
+
+        tr:hover .rank-num { color: #ff3e3e; transition: 0.3s; }
     </style>
 </head>
-<body>
+<body data-v-lang="ja">
 
 <div class="wrapper">
-    <div class="hero">
-        <h1>世界「やばい」ゲームランキング 2026</h1>
-        <div>Global Problematic Game Ranking | 全球问题游戏排名 | Clasificación Global de Juegos Problemáticos</div>
+    <div class="version-tag">v1.1.0</div>
+    
+    <div class="lang-selector">
+        <select onchange="document.body.setAttribute('data-v-lang', this.value)">
+            <option value="ja">Select Language / 日本語</option>
+            <option value="en">English</option>
+            <option value="cn">简体中文</option>
+            <option value="es">Español</option>
+        </select>
     </div>
+
+    <div class="header">
+        <h1 data-lang="ja">社会問題ゲームランキング 2026</h1>
+        <h1 data-lang="en">Social Problem Game Ranking 2026</h1>
+        <h1 data-lang="cn">2026年 社会问题游戏排名</h1>
+        <h1 data-lang="es">Juegos Problemáticos Ranking 2026</h1>
+    </div>
+
     <table>
         <thead>
             <tr>
-                <th style="width:80px;">RANK</th>
-                <th style="width:200px;">GAME</th>
-                <th>MULTILINGUAL REASONS / 各国語での理由</th>
+                <th style="width: 100px;">RANK</th>
+                <th>DETAILS</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td class="rank">1</td>
-                <td><div class="title-group">Roblox</div></td>
+                <td class="rank-num">01</td>
                 <td>
-                    <div class="lang-grid">
-                        <div class="lang-item"><span class="lang-label">JP</span>児童搾取、依存症、安全上の深刻な欠陥。</div>
-                        <div class="lang-item"><span class="lang-label">EN</span>Child exploitation, addiction, and security flaws.</div>
-                        <div class="lang-item"><span class="lang-label">CN</span>儿童剥削、成瘾问题和严重的安保漏洞。</div>
-                        <div class="lang-item"><span class="lang-label">ES</span>Explotación infantil, adicción y fallos de seguridad.</div>
-                        <div class="lang-item"><span class="lang-label">HI</span>बाल शोषण, लत और सुरक्षा खामियां।</div>
-                        <div class="lang-item" dir="rtl"><span class="lang-label">AR</span>استغلال الأطفال، والإدمان، والثغرات الأمنية.</div>
+                    <span class="game-title" data-lang="ja">ロブロックス</span>
+                    <span class="game-title" data-lang="en">Roblox</span>
+                    <span class="game-title" data-lang="cn">Roblox (罗布乐思)</span>
+                    <span class="game-title" data-lang="es">Roblox</span>
+                    
+                    <div class="reason-text">
+                        <span data-lang="ja">児童搾取、アルゴリズムによる深刻な依存、セキュリティの欠如。</span>
+                        <span data-lang="en">Child exploitation, severe algorithmic addiction, and lack of security.</span>
+                        <span data-lang="cn">儿童剥削、算法导致的严重成瘾以及缺乏安全保障。</span>
+                        <span data-lang="es">Explotación infantil, adicción algorítmica severa y falta de seguridad.</span>
                     </div>
                 </td>
             </tr>
             <tr>
-                <td class="rank">2</td>
-                <td><div class="title-group">ポケポケ</div></td>
+                <td class="rank-num">02</td>
                 <td>
-                    <div class="lang-grid">
-                        <div class="lang-item"><span class="lang-label">JP</span>パック開封による賭博依存、過度な課金。</div>
-                        <div class="lang-item"><span class="lang-label">EN</span>Gambling addiction via pack opening, overspending.</div>
-                        <div class="lang-item"><span class="lang-label">CN</span>开包带来的赌博成瘾和过度消费。</div>
-                        <div class="lang-item"><span class="lang-label">ES</span>Adicción al juego por apertura de sobres, gasto excesivo.</div>
-                        <div class="lang-item"><span class="lang-label">HI</span>पैक खोलने के माध्यम से जुए की लत, अत्यधिक खर्च।</div>
-                        <div class="lang-item" dir="rtl"><span class="lang-label">AR</span>إدمان القمار عبر فتح الحزم، والإنفاق المفرط.</div>
+                    <span class="game-title" data-lang="ja">ポケポケ</span>
+                    <span class="game-title" data-lang="en">Pokémon TCG Pocket</span>
+                    <span class="game-title" data-lang="cn">宝可梦 TCG Pocket</span>
+                    <span class="game-title" data-lang="es">Pokémon TCG Pocket</span>
+                    
+                    <div class="reason-text">
+                        <span data-lang="ja">ガチャ演出によるギャンブル依存の誘発、高額課金問題。</span>
+                        <span data-lang="en">Gambling addiction induced by pack opening effects and overspending.</span>
+                        <span data-lang="cn">卡包抽取触发的赌博成瘾和高额消费问题。</span>
+                        <span data-lang="es">Inducción a la adicción al juego por apertura de sobres y gastos excesivos.</span>
                     </div>
                 </td>
             </tr>
             <tr>
-                <td class="rank">3</td>
-                <td><div class="title-group">Fortnite</div></td>
+                <td class="rank-num">03</td>
                 <td>
-                    <div class="lang-grid">
-                        <div class="lang-item"><span class="lang-label">JP</span>中毒設計による集団訴訟、格差いじめ。</div>
-                        <div class="lang-item"><span class="lang-label">EN</span>Class-action lawsuits for addictive design, bullying.</div>
-                        <div class="lang-item"><span class="lang-label">CN</span>成瘾设计的集体诉讼，以及社区霸凌。</div>
-                        <div class="lang-item"><span class="lang-label">ES</span>Demandas colectivas por diseño adictivo y acoso.</div>
-                        <div class="lang-item"><span class="lang-label">HI</span>नशे की लत डिजाइन और धमकाने के लिए सामूहिक मुकदमे।</div>
-                        <div class="lang-item" dir="rtl"><span class="lang-label">AR</span>دعاوى قضائية جماعية للتصميم الإدماني والتنمر.</div>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td class="rank">4</td>
-                <td><div class="title-group">Minecraft</div></td>
-                <td>
-                    <div class="lang-grid">
-                        <div class="lang-item"><span class="lang-label">JP</span>生活破綻、ID義務化による監視社会化。</div>
-                        <div class="lang-item"><span class="lang-label">EN</span>Life disruption, surveillance via mandatory ID.</div>
-                        <div class="lang-item"><span class="lang-label">CN</span>生活秩序被破坏，通过强制ID实行的监视。</div>
-                        <div class="lang-item"><span class="lang-label">ES</span>Desajuste vital, vigilancia por identidad obligatoria.</div>
-                        <div class="lang-item"><span class="lang-label">HI</span>जीवन में व्यवधान, अनिवार्य आईडी के माध्यम से निगरानी।</div>
-                        <div class="lang-item" dir="rtl"><span class="lang-label">AR</span>اضطراب الحياة، والمراقبة عبر الهوية الإلزامية.</div>
+                    <span class="game-title" data-lang="ja">フォートナイト</span>
+                    <span class="game-title" data-lang="en">Fortnite</span>
+                    <span class="game-title" data-lang="cn">堡垒之夜</span>
+                    <span class="game-title" data-lang="es">Fortnite</span>
+                    
+                    <div class="reason-text">
+                        <span data-lang="ja">中毒設計に対する集団訴訟、限定スキンによるコミュニティ内いじめ。</span>
+                        <span data-lang="en">Class-action lawsuits over addictive design and skin-based bullying.</span>
+                        <span data-lang="cn">针对成瘾设计的集体诉讼以及基于皮肤的社区霸凌。</span>
+                        <span data-lang="es">Demandas colectivas por diseño adictivo y acoso basado en skins.</span>
                     </div>
                 </td>
             </tr>
@@ -98,7 +117,8 @@
 </div>
 
 <script>
-    console.log("Global Multilingual Ranking 2026 Ready.");
+    // v1.1.0: Added language attribute switching logic
+    console.log("System v1.1.0 deployed for SOGO HOUSE.");
 </script>
 
 </body>
