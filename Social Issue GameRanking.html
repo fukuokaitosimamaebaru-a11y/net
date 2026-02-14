@@ -2,113 +2,183 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>Social Problem Games v1.1.0</title>
+    <title>Global Game Ranking 2026 - Microsoft Design</title>
     <style>
-        body { font-family: 'Segoe UI', system-ui, sans-serif; background: #050505; color: #fff; margin: 0; padding: 20px; transition: background 0.3s; }
-        .wrapper { max-width: 900px; margin: 40px auto; background: #111; border: 1px solid #333; border-radius: 20px; overflow: hidden; position: relative; }
-        
-        /* バージョン表記 */
-        .version-tag { position: absolute; top: 15px; left: 20px; font-size: 12px; color: #666; font-family: monospace; }
-        
-        /* 右上ドロップアップ風セレクター */
-        .lang-selector { position: absolute; top: 15px; right: 20px; }
-        select { background: #222; color: #fff; border: 1px solid #444; padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 13px; }
-        
-        .header { background: linear-gradient(180deg, #333, #111); padding: 50px 20px 30px; text-align: center; border-bottom: 1px solid #333; }
-        .header h1 { margin: 0; font-size: 24px; color: #ff3e3e; text-transform: uppercase; letter-spacing: 2px; }
-        
-        table { width: 100%; border-collapse: collapse; }
-        th { background: #1a1a1a; color: #666; text-align: left; padding: 12px 20px; font-size: 11px; letter-spacing: 1px; }
-        td { padding: 30px 20px; border-bottom: 1px solid #222; }
-        
-        .rank-num { font-size: 40px; font-weight: 900; color: #222; line-height: 1; }
-        .game-title { font-size: 22px; font-weight: bold; display: block; margin-bottom: 8px; color: #fff; }
-        .reason-text { font-size: 14px; color: #aaa; line-height: 1.7; max-width: 600px; }
-        
-        /* 言語切り替えロジック */
-        [data-lang] { display: none; }
-        body[data-v-lang="ja"] [data-lang="ja"] { display: block; }
-        body[data-v-lang="en"] [data-lang="en"] { display: block; }
-        body[data-v-lang="cn"] [data-lang="cn"] { display: block; }
-        body[data-v-lang="es"] [data-lang="es"] { display: block; }
+        /* Microsoft Fluent Design System 意識のCSS */
+        :root {
+            --ms-blue: #0078d4;
+            --ms-gray: #f3f2f1;
+            --ms-text: #323130;
+            --ms-border: #edebe9;
+        }
 
-        tr:hover .rank-num { color: #ff3e3e; transition: 0.3s; }
+        body { 
+            background-color: var(--ms-gray); 
+            color: var(--ms-text); 
+            font-family: 'Segoe UI', 'wf_segoe-ui_normal', 'Arial', sans-serif; 
+            margin: 0; 
+            padding: 40px 20px;
+        }
+
+        .ms-container { 
+            max-width: 1000px; 
+            margin: auto; 
+            background: #ffffff; 
+            border: 1px solid var(--ms-border);
+            box-shadow: 0 1.6px 3.6px 0 rgba(0,0,0,0.132), 0 0.3px 0.9px 0 rgba(0,0,0,0.108);
+            border-radius: 4px;
+            position: relative;
+        }
+
+        .ms-header {
+            padding: 32px;
+            border-bottom: 1px solid var(--ms-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ms-header h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--ms-text);
+        }
+
+        /* ドロップダウン (Microsoft風) */
+        .lang-selector select {
+            padding: 6px 12px;
+            border: 1px solid #8a8886;
+            border-radius: 2px;
+            background: #fff;
+            color: var(--ms-text);
+            font-size: 14px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .lang-selector select:hover { background: var(--ms-gray); }
+
+        table { width: 100%; border-collapse: collapse; }
+        th { 
+            background: #faf9f8; 
+            text-align: left; 
+            padding: 12px 24px; 
+            font-size: 12px; 
+            font-weight: 600; 
+            color: #605e5c;
+            border-bottom: 1px solid var(--ms-border);
+        }
+
+        td { 
+            padding: 24px; 
+            border-bottom: 1px solid var(--ms-border);
+            vertical-align: top;
+        }
+
+        tr:hover { background-color: #f8f8f8; }
+
+        .rank-number {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--ms-blue);
+            line-height: 1;
+        }
+
+        .game-title {
+            display: block;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--ms-blue);
+        }
+
+        .game-reason {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #323130;
+        }
+
+        /* 表示切り替え用 */
+        [data-lang] { display: none; }
+        body[data-current-lang="ja"] [data-lang="ja"] { display: inline; }
+        body[data-current-lang="en"] [data-lang="en"] { display: inline; }
+        body[data-current-lang="cn"] [data-lang="cn"] { display: inline; }
+        body[data-current-lang="es"] [data-lang="es"] { display: inline; }
     </style>
 </head>
-<body data-v-lang="ja">
+<body data-current-lang="ja">
 
-<div class="wrapper">
-    <div class="version-tag">v1.1.0</div>
-    
-    <div class="lang-selector">
-        <select onchange="document.body.setAttribute('data-v-lang', this.value)">
-            <option value="ja">Select Language / 日本語</option>
-            <option value="en">English</option>
-            <option value="cn">简体中文</option>
-            <option value="es">Español</option>
-        </select>
-    </div>
-
-    <div class="header">
+<div class="ms-container">
+    <div class="ms-header">
         <h1 data-lang="ja">社会問題ゲームランキング 2026</h1>
-        <h1 data-lang="en">Social Problem Game Ranking 2026</h1>
+        <h1 data-lang="en">Social Issue Game Ranking 2026</h1>
         <h1 data-lang="cn">2026年 社会问题游戏排名</h1>
-        <h1 data-lang="es">Juegos Problemáticos Ranking 2026</h1>
+        <h1 data-lang="es">Ranking de Juegos con Impacto Social 2026</h1>
+
+        <div class="lang-selector">
+            <select onchange="document.body.setAttribute('data-current-lang', this.value)">
+                <option value="ja">日本語</option>
+                <option value="en">English</option>
+                <option value="cn">简体中文</option>
+                <option value="es">Español</option>
+            </select>
+        </div>
     </div>
 
     <table>
         <thead>
             <tr>
-                <th style="width: 100px;">RANK</th>
+                <th style="width: 80px;">RANK</th>
                 <th>DETAILS</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td class="rank-num">01</td>
+                <td class="rank-number">1</td>
                 <td>
                     <span class="game-title" data-lang="ja">ロブロックス</span>
                     <span class="game-title" data-lang="en">Roblox</span>
-                    <span class="game-title" data-lang="cn">Roblox (罗布乐思)</span>
+                    <span class="game-title" data-lang="cn">Roblox</span>
                     <span class="game-title" data-lang="es">Roblox</span>
                     
-                    <div class="reason-text">
-                        <span data-lang="ja">児童搾取、アルゴリズムによる深刻な依存、セキュリティの欠如。</span>
-                        <span data-lang="en">Child exploitation, severe algorithmic addiction, and lack of security.</span>
-                        <span data-lang="cn">儿童剥削、算法导致的严重成瘾以及缺乏安全保障。</span>
-                        <span data-lang="es">Explotación infantil, adicción algorítmica severa y falta de seguridad.</span>
+                    <div class="game-reason">
+                        <span data-lang="ja">児童搾取、依存症、安全上の深刻な欠陥。</span>
+                        <span data-lang="en">Child exploitation, severe addiction, and major security flaws.</span>
+                        <span data-lang="cn">儿童剥削、成瘾问题和严重的安保漏洞。</span>
+                        <span data-lang="es">Explotación infantil, adicción y graves fallos de seguridad.</span>
                     </div>
                 </td>
             </tr>
             <tr>
-                <td class="rank-num">02</td>
+                <td class="rank-number">2</td>
                 <td>
                     <span class="game-title" data-lang="ja">ポケポケ</span>
                     <span class="game-title" data-lang="en">Pokémon TCG Pocket</span>
                     <span class="game-title" data-lang="cn">宝可梦 TCG Pocket</span>
                     <span class="game-title" data-lang="es">Pokémon TCG Pocket</span>
-                    
-                    <div class="reason-text">
-                        <span data-lang="ja">ガチャ演出によるギャンブル依存の誘発、高額課金問題。</span>
-                        <span data-lang="en">Gambling addiction induced by pack opening effects and overspending.</span>
-                        <span data-lang="cn">卡包抽取触发的赌博成瘾和高额消费问题。</span>
-                        <span data-lang="es">Inducción a la adicción al juego por apertura de sobres y gastos excesivos.</span>
+
+                    <div class="game-reason">
+                        <span data-lang="ja">パック開封による賭博依存、未成年者の過度な課金。</span>
+                        <span data-lang="en">Gambling addiction through pack opening and underage overspending.</span>
+                        <span data-lang="cn">卡包抽取导致的赌博成瘾和未成年人过度消费。</span>
+                        <span data-lang="es">Adicción al juego por apertura de sobres y gasto excesivo de menores.</span>
                     </div>
                 </td>
             </tr>
             <tr>
-                <td class="rank-num">03</td>
+                <td class="rank-number">3</td>
                 <td>
                     <span class="game-title" data-lang="ja">フォートナイト</span>
                     <span class="game-title" data-lang="en">Fortnite</span>
-                    <span class="game-title" data-lang="cn">堡垒之夜</span>
+                    <span class="game-title" data-lang="cn">堡垒之夜 (Fortnite)</span>
                     <span class="game-title" data-lang="es">Fortnite</span>
-                    
-                    <div class="reason-text">
-                        <span data-lang="ja">中毒設計に対する集団訴訟、限定スキンによるコミュニティ内いじめ。</span>
-                        <span data-lang="en">Class-action lawsuits over addictive design and skin-based bullying.</span>
-                        <span data-lang="cn">针对成瘾设计的集体诉讼以及基于皮肤的社区霸凌。</span>
-                        <span data-lang="es">Demandas colectivas por diseño adictivo y acoso basado en skins.</span>
+
+                    <div class="game-reason">
+                        <span data-lang="ja">中毒設計に対する集団訴訟、ゲーム内格差によるいじめ。</span>
+                        <span data-lang="en">Class-action lawsuits for addictive design and skin-based bullying.</span>
+                        <span data-lang="cn">针对成瘾设计的集体诉讼以及基于皮肤等级的霸凌。</span>
+                        <span data-lang="es">Demandas colectivas por diseño adictivo y acoso por estatus social.</span>
                     </div>
                 </td>
             </tr>
@@ -117,8 +187,8 @@
 </div>
 
 <script>
-    // v1.1.0: Added language attribute switching logic
-    console.log("System v1.1.0 deployed for SOGO HOUSE.");
+    // SOGO HOUSEさん、JSとCSSを統合し、画像なしの純粋なコードで構築しました。
+    console.log("Microsoft Design UI Loaded.");
 </script>
 
 </body>
